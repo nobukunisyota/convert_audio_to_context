@@ -1,3 +1,17 @@
+document.addEventListener('DOMContentLoaded',getTextBoxValue)
+
+function getTextBoxValue() {
+    let context = document.getElementById('textbox_input');
+	context.addEventListener('keydown', enterKeyPress);
+}
+
+function enterKeyPress(event){
+	if(event.key === 'Enter'){
+		console.log('Press your Enter key.')
+        console.log(event.target.value);
+	}
+}
+
 function buttonClick() {
     fetch('https://zipcloud.ibsnet.co.jp/api/search?zipcode=7830060')
     .then(response => response.json())
