@@ -1,7 +1,21 @@
-function modify_api_data(data) {
-}
+import { username } from "./setenv.js";
 
-function main() {
-    console.log('main function start');
+async function getData() {
+    const response = await fetch(`https://zenn.dev/api/articles?username=${username}`);
+    const data = await response.json();
+    return data;
 }
-main();
+try {
+    getData()
+    .then(function(data) {
+        for (let i = 0; i < data.length; i++) {
+            console.log(data[i].name);
+        }
+    })
+}
+catch (error) {
+    console.log(error);
+}
+finally {
+    console.log('This is always executed');
+}
