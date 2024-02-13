@@ -1,7 +1,7 @@
 package main
 
 import (
-	"sample-api/urls"
+	"net/http"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -17,10 +17,22 @@ func newRouter() *echo.Echo {
 
 	// Define the route
 	e.File("/", "index.html")
-	e.POST("/tasks", urls.AddTask)
-	e.GET("/tasks", urls.GetTasks)
-	e.PUT("/tasks", urls.UpdateTask)
-	e.DELETE("/tasks", urls.DeleteTask)
+	e.POST("/tasks", addTask)
+	e.GET("/tasks", getTasks)
+	e.PUT("/tasks", updateTask)
+	e.DELETE("/tasks", deleteTask)
 
 	return e
+}
+func addTask(c echo.Context) error {
+	return c.String(http.StatusOK, "Hello, World!")
+}
+func getTasks(c echo.Context) error {
+	return c.String(http.StatusOK, "Hello, World!")
+}
+func updateTask(c echo.Context) error {
+	return c.String(http.StatusOK, "Hello, World!")
+}
+func deleteTask(c echo.Context) error {
+	return c.String(http.StatusOK, "Hello, World!")
 }
