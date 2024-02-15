@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"sample-api/model"
+	"strconv"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -39,6 +40,7 @@ func getTasks(c echo.Context) error {
 	tasks := []model.Task{}
 	model.DB.Find(&tasks)
 	return c.JSON(http.StatusOK, tasks)
+
 }
 func getTaskByID(c echo.Context) error {
 	id := c.Param("id")
@@ -50,11 +52,12 @@ func getTaskByID(c echo.Context) error {
 	return c.JSON(http.StatusOK, task)
 }
 func updateTask(c echo.Context) error {
-	// id := c.Param("id")
+	id, _ := strconv.Atoi(c.Param("id"))
 	task := model.Task{}
 	if err := c.Bind(&task); err != nil {
 		return err
 	}
+	task.ID = id
 	model.DB.Save(&task)
 	return c.JSON(http.StatusOK, task)
 }
@@ -64,6 +67,6 @@ func deleteTask(c echo.Context) error {
 	if err := c.Bind(&task); err != nil {
 		return err
 	}
-	delete(task, id)
+	model.DB.Delete(&task, id)
 	return c.JSON(http.StatusOK, task)
 }
