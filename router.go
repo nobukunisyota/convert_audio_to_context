@@ -1,10 +1,7 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"sample-api/model"
-	"strconv"
+	"sample-api/controller"
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -17,56 +14,14 @@ func newRouter() *echo.Echo {
 	// Setting up middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	fmt.Printf("e: %T", e)
+
 	// Define the route
-	e.File("/", "index.html")
-	e.POST("/tasks", addTask)
-	e.GET("/tasks/:id", getTaskByID)
-	e.GET("/tasks", getTasks)
-	e.PUT("/tasks/:id", updateTask)
-	e.DELETE("/tasks/:id", deleteTask)
+	api := e.Group("/api/v1")
+	api.POST("/tasks", controller.AddTask)
+	api.GET("/tasks/:id", controller.GetTaskByID)
+	api.GET("/tasks", controller.GetTasks)
+	api.PUT("/tasks/:id", controller.UpdateTask)
+	api.DELETE("/tasks/:id", controller.DeleteTask)
 
 	return e
-}
-func addTask(c echo.Context) error {
-	task := model.Task{}
-	if err := c.Bind(&task); err != nil {
-		return err
-	}
-	model.DB.Create(&task)
-	return c.JSON(http.StatusCreated, task)
-}
-func getTasks(c echo.Context) error {
-	tasks := []model.Task{}
-	model.DB.Find(&tasks)
-	return c.JSON(http.StatusOK, tasks)
-
-}
-func getTaskByID(c echo.Context) error {
-	id := c.Param("id")
-	task := model.Task{}
-	if err := c.Bind(&task); err != nil {
-		return err
-	}
-	model.DB.First(&task, id)
-	return c.JSON(http.StatusOK, task)
-}
-func updateTask(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
-	task := model.Task{}
-	if err := c.Bind(&task); err != nil {
-		return err
-	}
-	task.ID = id
-	model.DB.Save(&task)
-	return c.JSON(http.StatusOK, task)
-}
-func deleteTask(c echo.Context) error {
-	id := c.Param("id")
-	task := model.Task{}
-	if err := c.Bind(&task); err != nil {
-		return err
-	}
-	model.DB.Delete(&task, id)
-	return c.JSON(http.StatusOK, task)
 }

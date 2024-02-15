@@ -19,5 +19,5 @@ func index(c echo.Context) error {
 func main() {
 	router := newRouter()
 	router.GET("/", index)
-	router.Logger.Fatal(router.Start(":1323"))
+	router.Logger.Fatal(router.Start(":8001"))
 }
