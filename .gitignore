@@ -1,2 +1,5 @@
 /db/*
 .env
+/bin
+docker-compose.yml
+Dockerfile
