@@ -14,6 +14,7 @@ func newRouter() *echo.Echo {
 	// Setting up middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
+	e.Use(middleware.CORS())
 	// Define the route
 	api := e.Group("/api/v1")
 	api.POST("/tasks", controller.AddTask)
