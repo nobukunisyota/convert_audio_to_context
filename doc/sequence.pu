@@ -1,6 +1,6 @@
 @startuml
 ' 変数定義
-Participant frontend as FE
+Participant curl as FE
 Participant Echo as BE
 Participant Gorm as OR
 Participant SQLite as DB
@@ -10,16 +10,12 @@ FE -> BE : Request
 activate BE
     BE -> OR : 構造体
     note left
-    Request:
-    \tパスパラメータ
-    \tクエリパラメータ
-    Request:
-    \tJosnフォーマット
+    Josnフォーマット
     end note
     activate OR
-        OR -> DB : O/Rマッパー
+        OR -> DB : ORM
         activate DB
-        DB --> OR : O/Rマッパー
+        DB --> OR : ORM
         deactivate DB
     OR --> BE : 構造体
     deactivate OR
