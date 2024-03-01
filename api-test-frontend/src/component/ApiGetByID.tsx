@@ -1,8 +1,8 @@
 import React from 'react'
 
-function ApiGetByID(props) {
+function ApiGetByID(id_num) {
     return (
-        <div>{props.id_num}</div>
+        <div>{id_num}</div>
     )
 }
 
