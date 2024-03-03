@@ -14,6 +14,7 @@ function App() {
     const getTaskHandler = () => {
         setGetTask(!getTask);
     }
+    // Add API Tasks
     return (
         <div>
             <button onClick={() => getApiHandler()}>Get All Task</button>
