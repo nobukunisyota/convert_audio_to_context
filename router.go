@@ -22,7 +22,7 @@ func newRouter() *echo.Echo {
 	api.GET("/tasks", controller.GetTasks)
 	api.PUT("/tasks/:id", controller.UpdateTask)
 	api.DELETE("/tasks/:id", controller.DeleteTask)
-	// api.POST("/users", controller.Login)
+	api.POST("/users", controller.Login)
 
 	return e
 }
